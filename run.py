@@ -87,9 +87,9 @@ def update_worksheet(data, worksheet):
     print(f"{worksheet} worksheet updated successfully\n")
 
 
-def calclate_surplus_data(sales_row):
+def calculate_surplus_data(sales_row):
     """
-    compares sales with stock and calulates the surplus for each item type.
+    compares sales with stock and calculates the surplus for each item type.
     The surplus is defined as the sales figure subtracted form the stock:
     positive surplus indicates waste
     negative surplus indicates extra made when stock was sold out. 
@@ -107,7 +107,7 @@ def calclate_surplus_data(sales_row):
 
 def get_last_5_entries_sales():
     """
-    |Collects collums of data from the sales worksheet, collecting 
+    |Collects colums of data from the sales worksheet, collecting 
     the last 5 entries for each sandwich and returns the data
     as a list of lists
     """
@@ -121,6 +121,21 @@ def get_last_5_entries_sales():
     
     return colums
 
+def calculate_stock_data(data):
+    """
+    Calcul;ate the average stock for each item type, adding 10%
+    """
+    print("Calculating stock data...\n")
+    new_stock_data = []
+
+    for column in data:
+        int_column = [int(num) for num in column]
+        avgerage = sum(int_column) / len(int_column)
+        stock_num = avgerage * 1.1
+        new_stock_data.append(round(stock_num))
+
+    return new_stock_data
+
 def main():
     """
     run all program functions
@@ -128,11 +143,11 @@ def main():
     data = get_sales_data()
     sales_data = [int(num) for num in data]
     update_worksheet(sales_data, "sales")
-    new_surplus_data = calclate_surplus_data(sales_data)
+    new_surplus_data = calculate_surplus_data(sales_data)
     update_worksheet(new_surplus_data, "surplus")
-
+    sales_colums = get_last_5_entries_sales()
+    stock_data = calculate_stock_data(sales_colums)
+    update_worksheet(stock_data, "stock")
 
 print("Welcome to Love Sandwiches Data Automation")
-# main()
-
-sales_colums = get_last_5_entries_sales()
+main()
